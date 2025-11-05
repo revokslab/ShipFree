@@ -1,0 +1,47 @@
+{
+  "name": "nuxt-app",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxt/image": "^1.11.0",
+    "@nuxtjs/supabase": "^2.0.1",
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "@stripe/stripe-js": "^8.3.0",
+    "@vueuse/motion": "^3.0.3",
+    "@vueuse/nuxt": "^14.0.0",
+    "axios": "^1.13.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.44.7",
+    "form-data": "^4.0.4",
+    "lemonsqueezy.ts": "^0.1.8",
+    "lucide-vue-next": "^0.552.0",
+    "mailgun.js": "^12.1.1",
+    "nuxt": "^4.2.0",
+    "pg": "^8.16.3",
+    "radix-vue": "^1.9.17",
+    "stripe": "^19.2.1",
+    "tailwind-merge": "^3.3.1",
+    "vue": "^3.5.22",
+    "vue-router": "^4.6.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "@types/pg": "^8.15.6",
+    "autoprefixer": "^10.4.21",
+    "drizzle-kit": "^0.31.6",
+    "postcss": "^8.5.6",
+    "prettier": "^3.6.2",
+    "tailwindcss": "^4.1.16",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}
