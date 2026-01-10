@@ -1,4 +1,4 @@
-# ⚡ ShipFree
+# ⚡ ShipFree V2 - Revamping
 
 Hi there! 👋
 
@@ -6,7 +6,7 @@ ShipFree is a free alternative to ShipFast, designed to simplify and optimize yo
 
 ## Features
 
-- SEO Optimisation
+- SEO Optimization
 - User authentication with Better-Auth
 - Stripe, Polar, Autumn Billing, Dodo Payments, Commet and Creem integration
 - Email messaging via Resend, Postmark, Plunk, and Nodemailer
