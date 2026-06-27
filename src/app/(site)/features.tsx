@@ -11,8 +11,8 @@ export default function Features() {
     {
       title: 'Payments',
       description:
-        'Stripe and Polar integrations. Subscriptions, one-time payments, and webhooks configured.',
-      logos: ['/stack-icons/stripe.svg', '/stack-icons/polar.svg'],
+        'Stripe, Polar, Lemon Squeezy, and Creem integrations. Subscriptions, one-time payments, and webhooks configured.',
+      logos: ['/stack-icons/stripe.svg', '/stack-icons/polar.svg', '/stack-icons/creem.png'],
     },
     {
       title: 'Database',

@@ -35,6 +35,7 @@
           "auth/providers",
           "payments/overview",
           "payments/providers",
+          "payments/creem",
           "payments/webhooks",
           "email/overview",
           "email/providers",
