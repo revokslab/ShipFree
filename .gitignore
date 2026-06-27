@@ -31,7 +31,6 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
-.env*
 !.env.example
 
 # vercel
@@ -47,3 +46,4 @@ opencode.json
 /migrations
 # Sentry Config File
 .env.sentry-build-plugin
+config.bat

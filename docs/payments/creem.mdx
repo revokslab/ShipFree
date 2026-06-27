@@ -1,0 +1,84 @@
+---
+title: "Creem"
+description: "Accept payments with Creem, an EU-based Merchant of Record."
+---
+
+# Creem
+
+[Creem](https://creem.io) is an EU-based Merchant of Record (MoR) with low, transparent fees. As a MoR, Creem handles sales tax/VAT, invoicing, and compliance on your behalf.
+
+ShipFree ships a first-class Creem adapter that implements the same `PaymentAdapter` interface as Stripe, Polar, and Lemon Squeezy, so switching to Creem is just configuration.
+
+## 1. Get your API key
+
+1. Sign up at [creem.io](https://creem.io) and open the dashboard.
+2. Go to the **Developers** menu and copy your API key.
+
+<Note>
+  Creem uses **separate API keys** for test mode and production. The test key only works
+  against `test-api.creem.io`. Set `CREEM_TEST_MODE=true` while developing.
+</Note>
+
+## 2. Create your products
+
+Create one product per paid plan (Starter, Pro, Enterprise) in the Creem dashboard and copy each product ID.
+
+## 3. Configure environment variables
+
+```bash
+# Select Creem as the active provider
+PAYMENT_PROVIDER=creem
+
+# Credentials (use your test-mode key while developing)
+CREEM_API_KEY=creem_...
+CREEM_WEBHOOK_SECRET=whsec_...
+CREEM_TEST_MODE=true
+
+# Public product IDs (used for client-side display)
+NEXT_PUBLIC_CREEM_PRODUCT_STARTER_MONTHLY=prod_...
+NEXT_PUBLIC_CREEM_PRODUCT_PRO_MONTHLY=prod_...
+NEXT_PUBLIC_CREEM_PRODUCT_ENTERPRISE_MONTHLY=prod_...
+```
+
+The product IDs map to plans in `src/config/payments.ts`. Adjust the `amount`, `currency`,
+and `interval` there to match what you configured in Creem.
+
+## 4. Configure the webhook
+
+Point a Creem webhook at your deployment:
+
+```
+https://your-domain.com/api/webhooks/payments
+```
+
+Creem signs each request with the `creem-signature` header (HMAC-SHA256 of the raw body using
+`CREEM_WEBHOOK_SECRET`). The shared webhook handler verifies the signature and updates the
+`customer`, `subscription`, and `payment` tables.
+
+Handled events:
+
+- `checkout.completed` — persists a new subscription (recurring) or payment (one-time)
+- `subscription.active`, `subscription.paid`, `subscription.trialing`, `subscription.update`
+- `subscription.past_due`, `subscription.unpaid`, `subscription.paused`
+- `subscription.canceled`, `subscription.expired`
+
+## 5. Test the flow
+
+1. With `CREEM_TEST_MODE=true` and your test key set, start checkout from the pricing page.
+2. Complete a payment using Creem's test card.
+3. Confirm the `subscription` row is created/updated after the webhook fires.
+
+## How it works
+
+The adapter lives at `src/lib/payments/providers/creem.ts` and uses the official
+[`creem` SDK](https://www.npmjs.com/package/creem):
+
+- `createCheckout` — creates a Creem checkout session with `userId`/`plan` metadata
+- `getSubscription` / `cancelSubscription` — read and cancel subscriptions
+- `createPortal` — generates a Creem customer portal link so users can manage billing
+- `processWebhook` / `validateWebhook` — verify and map Creem events to ShipFree's tables
+
+<Info>
+  Creem creates the customer record during checkout, so `createCustomer` returns a pending
+  placeholder that the `checkout.completed` webhook reconciles with the real Creem customer ID.
+</Info>

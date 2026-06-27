@@ -15,7 +15,7 @@ export default function Pricing() {
     { text: 'Auth, payments & UI prewired', included: true },
     { text: 'Built-in SEO', included: true },
     { text: 'Resend transaction emails', included: true },
-    { text: 'Payments via Stripe / Lemon Squeezy / Polar', included: true },
+    { text: 'Payments via Stripe / Lemon Squeezy / Polar / Creem', included: true },
     { text: 'Up to 100+ hours saved', included: true },
     { text: 'MIT open-source license', included: true },
     { text: 'Community Releases & fixes', included: true },
