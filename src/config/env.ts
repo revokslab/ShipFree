@@ -1,14 +1,27 @@
 import { createEnv } from '@t3-oss/env-nextjs'
 import { z } from 'zod'
 
+/**
+ * Coerce a boolean-ish env var into a real boolean.
+ *
+ * Environment variables are always strings, so `z.boolean()` rejects "true"/"false"
+ * and crashes the app at startup. This parses the string and normalizes the result,
+ * mirroring the semantics of `isTruthy` below.
+ */
+const booleanFlag = (defaultValue: 'true' | 'false') =>
+  z
+    .string()
+    .default(defaultValue)
+    .transform((value) => value.toLowerCase() === 'true' || value === '1')
+
 export const env = createEnv({
   server: {
     // Core Database and Authentication
     DATABASE_URL: z.string().optional(),
     BETTER_AUTH_SECRET: z.string().default('dev-secret-change-in-production'),
     BETTER_AUTH_URL: z.string().default('http://localhost:3000'),
-    BILLING_ENABLED: z.boolean().default(false),
-    EMAIL_VERIFICATION_ENABLED: z.boolean().default(false),
+    BILLING_ENABLED: booleanFlag('false'),
+    EMAIL_VERIFICATION_ENABLED: booleanFlag('false'),
 
     // Optional: Sentry
     SENTRY_DSN: z.string().optional(),
