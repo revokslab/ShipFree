@@ -24,12 +24,13 @@ export const env = createEnv({
 
     // Optional: Email providers
     EMAIL_PROVIDER: z
-      .enum(['resend', 'postmark', 'nodemailer', 'plunk', 'custom', 'log'])
+      .enum(['resend', 'postmark', 'nodemailer', 'plunk', 'custom', 'log', 'mailkite'])
       .default('log'),
     RESEND_API_KEY: z.string().optional(),
     RESEND_DOMAIN: z.string().optional(),
     POSTMARK_API_TOKEN: z.string().optional(),
     PLUNK_API_KEY: z.string().optional(),
+    MAILKITE_API_KEY: z.string().optional(),
     SMTP_HOST: z.string().optional(),
     SMTP_PORT: z.coerce.number().optional(),
     SMTP_USER: z.string().optional(),
@@ -137,6 +138,7 @@ export const env = createEnv({
     EMAIL_PROVIDER: process.env.EMAIL_PROVIDER,
     POSTMARK_API_TOKEN: process.env.POSTMARK_API_TOKEN,
     PLUNK_API_KEY: process.env.PLUNK_API_KEY,
+    MAILKITE_API_KEY: process.env.MAILKITE_API_KEY,
     SMTP_HOST: process.env.SMTP_HOST,
     SMTP_PORT: process.env.SMTP_PORT,
     SMTP_USER: process.env.SMTP_USER,
