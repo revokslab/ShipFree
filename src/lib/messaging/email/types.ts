@@ -5,7 +5,7 @@
 
 export type EmailType = 'transactional' | 'marketing' | 'updates' | 'notifications'
 
-export type EmailProviderName = 'resend' | 'postmark' | 'nodemailer' | 'plunk' | 'custom' | 'log'
+export type EmailProviderName = 'resend' | 'postmark' | 'nodemailer' | 'plunk' | 'custom' | 'log' | 'mailkite'
 
 export interface EmailAttachment {
   filename: string
