@@ -1,6 +1,6 @@
 ---
 title: "Email Providers"
-description: "Resend, Postmark, SMTP, Plunk, and custom providers."
+description: "Resend, Postmark, SMTP, Plunk, MailKite, and custom providers."
 ---
 
 # Email providers
@@ -19,6 +19,12 @@ Configure the provider with `EMAIL_PROVIDER`. If set, ShipFree uses that provide
 ## Plunk
 
 - `PLUNK_API_KEY`
+
+## MailKite
+
+- `MAILKITE_API_KEY`
+
+[MailKite](https://mailkite.dev) is inbound-first: it sends transactional mail *and* receives — parsed inbound email plus the SPF/DKIM verdict arrive as one signed webhook, so support inboxes, reply-to-thread and agent mailboxes need no second provider.
 
 ## Nodemailer (SMTP)
 
