@@ -5,6 +5,7 @@
     "": {
       "name": "shipfree",
       "dependencies": {
+        "@agentaos/pay": "^2.5.1",
         "@base-ui/react": "^1.0.0",
         "@better-auth/stripe": "^1.4.10",
         "@creem_io/better-auth": "^0.0.12",
@@ -58,6 +59,8 @@
     },
   },
   "packages": {
+    "@agentaos/pay": ["@agentaos/pay@2.5.1", "", {}, "sha512-cEdX6W8ccR7FXddOpO4CQY9ZSg08kwD02KM2dtFVHs+i2bgSurHJr3ZJFq0ODCwtjpfwWOWLRcREbL+Erk/E1g=="],
+
     "@alloc/quick-lru": ["@alloc/quick-lru@5.2.0", "", {}, "sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw=="],
 
     "@apm-js-collab/code-transformer": ["@apm-js-collab/code-transformer@0.8.2", "", {}, "sha512-YRjJjNq5KFSjDUoqu5pFUWrrsvGOxl6c3bu+uMFc9HNNptZ2rNU/TI2nLw4jnhQNtka972Ee2m3uqbvDQtPeCA=="],

@@ -1,11 +1,11 @@
 ---
 title: "Payment Providers"
-description: "Stripe, Polar, Lemon Squeezy, and Creem configuration."
+description: "Stripe, Polar, Lemon Squeezy, Creem, and AgentaOS configuration."
 ---
 
 # Payment providers
 
-ShipFree ships with Stripe, Polar, Lemon Squeezy, and Creem adapters. Configure one provider and set `PAYMENT_PROVIDER` (`stripe`, `polar`, `lemonsqueezy`, or `creem`).
+ShipFree ships with Stripe, Polar, Lemon Squeezy, Creem, and AgentaOS adapters. Configure one provider and set `PAYMENT_PROVIDER` (`stripe`, `polar`, `lemonsqueezy`, `creem`, or `agentaos`).
 
 ## Stripe
 
@@ -76,6 +76,25 @@ Optional public product IDs:
 - `NEXT_PUBLIC_CREEM_PRODUCT_STARTER_MONTHLY`
 - `NEXT_PUBLIC_CREEM_PRODUCT_PRO_MONTHLY`
 - `NEXT_PUBLIC_CREEM_PRODUCT_ENTERPRISE_MONTHLY`
+
+## AgentaOS
+
+[AgentaOS](https://agentaos.ai) is a Merchant of Record that handles VAT, sales tax, and invoices. Get your API key from the dashboard under **Developers → API keys**. See the [AgentaOS guide](/payments/agentaos) for the full setup.
+
+<Note>
+  The key prefix selects the mode: `sk_test_` for test mode, `sk_live_` for live payments.
+</Note>
+
+Required:
+
+- `AGENTAOS_API_KEY`
+- `AGENTAOS_WEBHOOK_SECRET`
+
+Optional public payment link IDs (one subscription payment link per plan):
+
+- `NEXT_PUBLIC_AGENTAOS_PRODUCT_STARTER_MONTHLY`
+- `NEXT_PUBLIC_AGENTAOS_PRODUCT_PRO_MONTHLY`
+- `NEXT_PUBLIC_AGENTAOS_PRODUCT_ENTERPRISE_MONTHLY`
 
 <Warning>
   If the configured provider is missing credentials, the payment system will fail at runtime.

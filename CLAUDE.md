@@ -9,7 +9,7 @@ ShipFree is a production-ready Next.js boilerplate designed to help developers s
 - **Runtime**: Bun (package manager and runtime)
 - **Database**: PostgreSQL with Drizzle ORM
 - **Authentication**: Better-Auth with multiple OAuth providers
-- **Payments**: Multi-provider support (Stripe, Polar, Lemon Squeezy, Creem)
+- **Payments**: Multi-provider support (Stripe, Polar, Lemon Squeezy, Creem, AgentaOS)
 - **Email**: Multi-provider support (Resend, Postmark, Plunk, Nodemailer)
 - **UI**: TailwindCSS 4, BaseUI components, Shadcn-style patterns
 - **Internationalization**: next-intl (i18n) with support for en, es, fr

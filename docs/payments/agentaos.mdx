@@ -1,0 +1,107 @@
+---
+title: "AgentaOS"
+description: "Accept payments with AgentaOS, a Merchant of Record."
+---
+
+# AgentaOS
+
+[AgentaOS](https://agentaos.ai) is a Merchant of Record (MoR). As a MoR, AgentaOS handles VAT, sales tax, and invoices on your behalf, and pays out to local bank accounts in [85 countries](https://docs.agentaos.ai/mor/supported-countries). Both individuals and companies can sell. Fees are 4.5% + EUR 0.50 per card sale with no monthly fee ([pricing](https://agentaos.ai/pricing)).
+
+ShipFree ships an AgentaOS adapter that implements the same `PaymentAdapter` interface as Stripe, Polar, Lemon Squeezy, and Creem, so switching to AgentaOS is just configuration.
+
+## 1. Get your API key
+
+1. Sign up at [agentaos.ai](https://agentaos.ai) and open the dashboard.
+2. Go to **Developers → API keys** and generate a key.
+
+<Note>
+  The key prefix selects the mode: `sk_test_` keys use test data and test money, `sk_live_` keys
+  take real payments. There is one API URL for both, so there is no separate test mode flag. Use
+  a test key while developing.
+</Note>
+
+## 2. Create a payment link for each plan
+
+AgentaOS has no separate products and prices: a plan is a **subscription payment link**.
+
+1. Create one subscription product per paid plan (Starter, Pro, Enterprise) in the dashboard,
+   with billing interval **Monthly**. Set a free trial on the product if you want one.
+2. Copy each product's **link ID** (a UUID, "Copy link ID" on the product page). This is not the
+   token at the end of the checkout URL.
+
+## 3. Configure environment variables
+
+```bash
+# Select AgentaOS as the active provider
+PAYMENT_PROVIDER=agentaos
+
+# Credentials (use your sk_test_ key while developing)
+AGENTAOS_API_KEY=sk_test_...
+AGENTAOS_WEBHOOK_SECRET=whsec_...
+
+# Public payment link IDs, one per plan
+NEXT_PUBLIC_AGENTAOS_PRODUCT_STARTER_MONTHLY=...
+NEXT_PUBLIC_AGENTAOS_PRODUCT_PRO_MONTHLY=...
+NEXT_PUBLIC_AGENTAOS_PRODUCT_ENTERPRISE_MONTHLY=...
+```
+
+The link IDs map to plans in `src/config/payments.ts`. Adjust the `amount`, `currency`, and
+`interval` there to match what you configured in AgentaOS.
+
+<Warning>
+  AgentaOS only accepts HTTPS success and cancel URLs, so set `NEXT_PUBLIC_APP_URL` to an HTTPS
+  URL (for example a tunnel) when you test checkout locally.
+</Warning>
+
+## 4. Configure the webhook
+
+In **Settings → Developers → Webhooks**, set your endpoint and reveal the signing secret
+(`AGENTAOS_WEBHOOK_SECRET`):
+
+```
+https://your-domain.com/api/webhooks/payments
+```
+
+AgentaOS signs each request with the `x-agentaos-signature` header (`t=<timestamp>,v1=<HMAC-SHA256>`
+of `<timestamp>.<raw body>` with your signing secret). The adapter verifies it with the SDK's
+`webhooks.verify()`, which also rejects signatures older than 5 minutes. The shared webhook
+handler then updates the `customer`, `subscription`, and `payment` tables.
+
+Handled events:
+
+- `checkout.session.completed`: persists the customer and a new subscription (subscription link) or
+  a payment (one-time link). It also fires on renewals; those carry no ShipFree metadata, so the
+  subscription row is updated by `subscription.renewed` instead.
+- `subscription.created`, `subscription.renewed`, `subscription.payment_failed`
+- `subscription.updated`, `subscription.canceled`
+
+Deliveries can repeat. Payments are keyed by the checkout `session_id` and subscriptions by the
+AgentaOS subscription id, so a repeated event updates the same row instead of creating a new one.
+
+## 5. Test the flow
+
+1. With your `sk_test_` key set, start checkout from the pricing page.
+2. Pay with the test card `4242 4242 4242 4242`, any future expiry and any CVC.
+3. Confirm the `subscription` row is created after the webhook fires. Test events carry
+   `livemode: false`.
+
+## How it works
+
+The adapter lives at `src/lib/payments/providers/agentaos.ts` and uses the official
+[`@agentaos/pay` SDK](https://www.npmjs.com/package/@agentaos/pay):
+
+- `createCheckout`: creates a checkout from the plan's payment link with `userId`/`plan` metadata
+- `getSubscription` / `cancelSubscription`: read a subscription and cancel it (at period end by
+  default)
+- `processWebhook` / `validateWebhook`: verify and map AgentaOS events to ShipFree's tables
+
+<Info>
+  AgentaOS creates the customer record when the buyer pays, so `createCustomer` returns a pending
+  placeholder that the `checkout.session.completed` webhook reconciles with the real AgentaOS
+  customer ID.
+</Info>
+
+<Warning>
+  AgentaOS does not provide a hosted customer portal. `createPortal` throws an error; let users
+  manage their plan from your app with `getSubscription` and `cancelSubscription`.
+</Warning>

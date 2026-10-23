@@ -39,7 +39,9 @@ export const env = createEnv({
     DEFAULT_FROM_NAME: z.string().optional(),
 
     // Optional: Payment provider selection
-    PAYMENT_PROVIDER: z.enum(['stripe', 'polar', 'lemonsqueezy', 'creem']).default('stripe'),
+    PAYMENT_PROVIDER: z
+      .enum(['stripe', 'polar', 'lemonsqueezy', 'creem', 'agentaos'])
+      .default('stripe'),
 
     // Stripe
     STRIPE_SECRET_KEY: z.string().optional(),
@@ -63,6 +65,11 @@ export const env = createEnv({
     CREEM_WEBHOOK_SECRET: z.string().optional(),
     // Creem ships separate test/production API keys; set this to use test-api.creem.io
     CREEM_TEST_MODE: z.string().optional(),
+
+    // AgentaOS (https://agentaos.ai) - Merchant of Record
+    // The key prefix selects the mode: sk_test_ for test mode, sk_live_ for live
+    AGENTAOS_API_KEY: z.string().optional(),
+    AGENTAOS_WEBHOOK_SECRET: z.string().optional(),
 
     // Optional: OAuth
     GOOGLE_CLIENT_ID: z.string().optional(),
@@ -106,6 +113,11 @@ export const env = createEnv({
     NEXT_PUBLIC_CREEM_PRODUCT_STARTER_MONTHLY: z.string().optional(),
     NEXT_PUBLIC_CREEM_PRODUCT_PRO_MONTHLY: z.string().optional(),
     NEXT_PUBLIC_CREEM_PRODUCT_ENTERPRISE_MONTHLY: z.string().optional(),
+
+    // AgentaOS payment link IDs (public)
+    NEXT_PUBLIC_AGENTAOS_PRODUCT_STARTER_MONTHLY: z.string().optional(),
+    NEXT_PUBLIC_AGENTAOS_PRODUCT_PRO_MONTHLY: z.string().optional(),
+    NEXT_PUBLIC_AGENTAOS_PRODUCT_ENTERPRISE_MONTHLY: z.string().optional(),
 
     // Premium Template Purchase (public)
     NEXT_PUBLIC_PREMIUM_PURCHASE_STRIPE_PUBLISHABLE_KEY: z.string().optional(),
@@ -171,6 +183,8 @@ export const env = createEnv({
     CREEM_API_KEY: process.env.CREEM_API_KEY,
     CREEM_WEBHOOK_SECRET: process.env.CREEM_WEBHOOK_SECRET,
     CREEM_TEST_MODE: process.env.CREEM_TEST_MODE,
+    AGENTAOS_API_KEY: process.env.AGENTAOS_API_KEY,
+    AGENTAOS_WEBHOOK_SECRET: process.env.AGENTAOS_WEBHOOK_SECRET,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     NEXT_PUBLIC_LEMONSQUEEZY_PRODUCT_STARTER_MONTHLY:
       process.env.NEXT_PUBLIC_LEMONSQUEEZY_PRODUCT_STARTER_MONTHLY,
@@ -196,6 +210,11 @@ export const env = createEnv({
     NEXT_PUBLIC_CREEM_PRODUCT_PRO_MONTHLY: process.env.NEXT_PUBLIC_CREEM_PRODUCT_PRO_MONTHLY,
     NEXT_PUBLIC_CREEM_PRODUCT_ENTERPRISE_MONTHLY:
       process.env.NEXT_PUBLIC_CREEM_PRODUCT_ENTERPRISE_MONTHLY,
+    NEXT_PUBLIC_AGENTAOS_PRODUCT_STARTER_MONTHLY:
+      process.env.NEXT_PUBLIC_AGENTAOS_PRODUCT_STARTER_MONTHLY,
+    NEXT_PUBLIC_AGENTAOS_PRODUCT_PRO_MONTHLY: process.env.NEXT_PUBLIC_AGENTAOS_PRODUCT_PRO_MONTHLY,
+    NEXT_PUBLIC_AGENTAOS_PRODUCT_ENTERPRISE_MONTHLY:
+      process.env.NEXT_PUBLIC_AGENTAOS_PRODUCT_ENTERPRISE_MONTHLY,
     NEXT_PUBLIC_PREMIUM_PURCHASE_STRIPE_PUBLISHABLE_KEY:
       process.env.NEXT_PUBLIC_PREMIUM_PURCHASE_STRIPE_PUBLISHABLE_KEY,
     NEXT_PUBLIC_PREMIUM_PURCHASE_DISCORD_INVITE_LINK:

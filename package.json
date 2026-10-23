@@ -16,6 +16,7 @@
     "migrate:prod": "cross-env NODE_ENV=production bun run ./scripts/migrate.ts"
   },
   "dependencies": {
+    "@agentaos/pay": "^2.5.1",
     "@base-ui/react": "^1.0.0",
     "@better-auth/stripe": "^1.4.10",
     "@creem_io/better-auth": "^0.0.12",

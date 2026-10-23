@@ -17,6 +17,7 @@ The handler verifies the signature for the active provider and uses the adapter 
 - Polar uses the `polar-webhook-signature` header
 - Lemon Squeezy uses the `x-signature` header
 - Creem uses the `creem-signature` header (HMAC-SHA256 of the raw body with `CREEM_WEBHOOK_SECRET`)
+- AgentaOS uses the `x-agentaos-signature` header (`t=<timestamp>,v1=<HMAC-SHA256>` of `<timestamp>.<raw body>` with `AGENTAOS_WEBHOOK_SECRET`)
 
 ## Local development
 

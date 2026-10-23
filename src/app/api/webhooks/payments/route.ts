@@ -32,6 +32,9 @@ export async function POST(req: Request) {
       case 'creem':
         signature = headerList.get('creem-signature') || ''
         break
+      case 'agentaos':
+        signature = headerList.get('x-agentaos-signature') || ''
+        break
     }
 
     if (!signature) {
@@ -68,6 +71,9 @@ export async function POST(req: Request) {
       } else if (provider === 'creem') {
         // Creem event name is in eventType
         type = parsedBody.eventType
+      } else if (provider === 'agentaos') {
+        // AgentaOS event name is in type
+        type = parsedBody.type
       }
 
       if (!type) {

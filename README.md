@@ -161,7 +161,7 @@ The premium purchase feature is used to sell the Premium template itself ($90 on
 - Discord invite link display after purchase
 - Client-side purchase tracking via localStorage
 
-**Important:** This is separate from the template's built-in payment system (Stripe, Polar, Lemon Squeezy, Creem) which is used by your application to accept payments from your customers.
+**Important:** This is separate from the template's built-in payment system (Stripe, Polar, Lemon Squeezy, Creem, AgentaOS) which is used by your application to accept payments from your customers.
 
 ### How to Remove
 

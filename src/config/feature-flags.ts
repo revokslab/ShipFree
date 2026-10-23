@@ -43,5 +43,9 @@ export const isPolarConfigured = Boolean(env.POLAR_ACCESS_TOKEN)
 /** Check if Creem is configured (@creem_io/better-auth) */
 export const isCreemConfigured = Boolean(env.CREEM_API_KEY)
 
+/** Check if AgentaOS is configured (@agentaos/pay) */
+export const isAgentaOSConfigured = Boolean(env.AGENTAOS_API_KEY)
+
 /** Check if any billing provider is configured */
-export const hasBillingProvider = isStripeConfigured || isPolarConfigured || isCreemConfigured
+export const hasBillingProvider =
+  isStripeConfigured || isPolarConfigured || isCreemConfigured || isAgentaOSConfigured
