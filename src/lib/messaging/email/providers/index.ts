@@ -23,6 +23,7 @@ import { createPostmarkProvider } from './postmark'
 import { createNodemailerProvider } from './nodemailer'
 import { createPlunkProvider } from './plunk'
 import { createCustomProvider, setCustomEmailProvider, clearCustomProvider } from './custom'
+import { createMailkiteProvider } from './mailkite'
 import { createLogProvider } from './log'
 
 /**
@@ -35,6 +36,7 @@ const providerFactories: Record<EmailProviderName, () => EmailProvider | null> =
   nodemailer: createNodemailerProvider,
   plunk: createPlunkProvider,
   custom: createCustomProvider,
+  mailkite: createMailkiteProvider,
   log: createLogProvider,
 }
 
@@ -48,6 +50,7 @@ export const providerPreferenceOrder: EmailProviderName[] = [
   'nodemailer',
   'plunk',
   'custom',
+  'mailkite',
   'log',
 ]
 
@@ -110,6 +113,7 @@ export {
   createNodemailerProvider,
   createPlunkProvider,
   createCustomProvider,
+  createMailkiteProvider,
   createLogProvider,
   setCustomEmailProvider,
   clearCustomProvider,
