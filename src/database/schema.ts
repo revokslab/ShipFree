@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm'
-import { pgTable, text, timestamp, boolean, index, decimal } from 'drizzle-orm/pg-core'
+import { pgTable, text, timestamp, boolean, index, uniqueIndex, decimal } from 'drizzle-orm/pg-core'
 
 export const user = pgTable('user', {
   id: text('id').primaryKey(),
@@ -126,7 +126,7 @@ export const subscription = pgTable(
   (table) => [
     index('subscription_userId_idx').on(table.userId),
     index('subscription_customerId_idx').on(table.customerId),
-    index('subscription_provider_subscriptionId_idx').on(table.providerSubscriptionId),
+    uniqueIndex('subscription_provider_subscriptionId_uidx').on(table.providerSubscriptionId),
     index('subscription_status_idx').on(table.status),
   ]
 )

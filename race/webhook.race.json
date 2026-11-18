@@ -1,0 +1,21 @@
+{
+  "rule": "Two deliveries for the same provider subscription (e.g. created + checkout completed) leave exactly one subscription row",
+  "setup": "SELECT 1",
+  "invariant": "SELECT count(*) <= 1 FROM subscription WHERE provider_subscription_id='sub_1'",
+  "isolation": [
+    "read committed"
+  ],
+  "notes": "SQL transliteration of the webhook handler; covers bounded SQL orders only, not HTTP or Stripe.",
+  "requests": [
+    {
+      "statements": [
+        "INSERT INTO subscription(id,provider_subscription_id,status) VALUES ('r1','sub_1','active') ON CONFLICT (provider_subscription_id) DO UPDATE SET status=excluded.status"
+      ]
+    },
+    {
+      "statements": [
+        "INSERT INTO subscription(id,provider_subscription_id,status) VALUES ('r2','sub_1','active') ON CONFLICT (provider_subscription_id) DO UPDATE SET status=excluded.status"
+      ]
+    }
+  ]
+}

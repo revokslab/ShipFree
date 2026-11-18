@@ -19,6 +19,10 @@ ShipFree is a free alternative to ShipFast, designed to simplify and optimize yo
 
 For full documentation, visit: [ShipFree Docs](https://shipfree.revoks.dev/docs)
 
+## Webhook concurrency test
+
+Payment providers can deliver webhook events twice or out of order. `npm run test:race` runs the payments webhook's database writes in every possible order on a real Postgres with [VibeRaven](https://viberaven.dev) (`npx -y viberaven race`) and fails if any order breaks the rule in `race/webhook.race.json`. It also runs in `npm test`. Add a rule there when you add a webhook handler.
+
 ## Code of Conduct
 
 Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
