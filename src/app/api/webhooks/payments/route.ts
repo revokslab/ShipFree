@@ -183,6 +183,20 @@ export async function POST(req: Request) {
             canceledAt: result.subscription.canceledAt,
             trialStart: result.subscription.trialStart,
             trialEnd: result.subscription.trialEnd,
+          }).onConflictDoUpdate({
+            // Two deliveries for the same provider subscription can both pass the
+            // lookup above; the unique index makes the second one update the row.
+            target: subscription.providerSubscriptionId,
+            set: {
+              status: result.subscription.status,
+              plan: result.subscription.plan,
+              interval: result.subscription.interval,
+              currentPeriodStart: result.subscription.currentPeriodStart,
+              currentPeriodEnd: result.subscription.currentPeriodEnd,
+              cancelAtPeriodEnd: result.subscription.cancelAtPeriodEnd,
+              canceledAt: result.subscription.canceledAt,
+              updatedAt: new Date(),
+            },
           })
         }
       }

@@ -10,6 +10,8 @@
     "format": "biome format --write",
     "typecheck": "tsc --noEmit --pretty",
     "lint": "biome lint",
+    "test": "npm run test:race",
+    "test:race": "npx -y viberaven@1.10.0 race . --spec race/webhook.race.json --migrations race",
     "biome:check": "biome check",
     "generate-migration": "drizzle-kit generate",
     "migrate:local": "bun run ./scripts/migrate.ts",
